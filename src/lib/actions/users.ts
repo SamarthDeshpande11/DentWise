@@ -1,6 +1,6 @@
 "use server";
 
-import { currentUser } from "@clerk/nextjs/server";
+import { currentUser} from "@clerk/nextjs/server";
 import{prisma} from "../prisma";
 
 export async function syncUser(){
@@ -8,13 +8,13 @@ export async function syncUser(){
         const user=await currentUser()
         if(!user) return
 
-        const existingUser=await prisma.user.findUnique({where:{clerkId:user.id}})
+        const existingUser=await prisma.user.findUnique({where:{clerkid:user.id}})
 
         if(existingUser) return existingUser;
 
         const dbUser=await prisma.user.create({
             data:{
-                clerkId:user.id,
+                clerkid:user.id,
                 firstName:user.firstName,
                 lastName:user.lastName,
                 email:user.emailAddresses[0].emailAddress,
